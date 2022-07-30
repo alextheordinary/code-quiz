@@ -14,16 +14,33 @@
         <h1>Rename or get rid of this later</h1>
     </header>
     <main>
-        <button type="button" id="start-button">Start</button>
         <div id="countdown-timer"></div>
         <!-- figure out how to link a function. probably via event listener -->
-        <a href="">View High Scores</a> 
-        <div id="question-card">
+        <a href="">View High Scores</a>
+        <div id="start-screen-container">
+            <h4>Try to answer all 5 questions as quickly and correctly as possible within 60 seconds. 10 seconds deducted for each wrong answer. </h4>
+            <button type="button" id="start-button">Start</button>
+        </div>
+        <div id="question-container">
             <div id="question">Question</div>
-                <button id="button-1" data-correct="false">B1</button>
-                <button id="button-2" data-correct="false">B2</button>
-                <button id="button-3" data-correct="false">B3</button>
-                <button id="button-4" data-correct="false">B4</button>
+            <button id="button-1" data-correct="false">B1</button>
+            <button id="button-2" data-correct="false">B2</button>
+            <button id="button-3" data-correct="false">B3</button>
+            <button id="button-4" data-correct="false">B4</button>
+        </div>
+        <div id="end-game-container">
+            <form id="high-score-form">
+                <div id="end-game-message"></div>
+                <label for="initials">Initials</label>
+                <input type="text" id="initials" name="initials" placeholder="Please enter your initials">
+                <button type="button" id="submit-high-score">Submit High Score</button>
+            </form>
+        </div>
+        <div id="high-scores-container">
+            <ol id="high-scores-list">
+            </ol>
+            <button type="button" id="go-back">Go back</button>
+            <button type="button" id="reset-high-scores">Reset High Scores</button>
         </div>
         <div id="message-text"></div>
     </main>

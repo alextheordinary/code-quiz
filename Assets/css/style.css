@@ -1,6 +1,15 @@
-#question-card {
+#question-container {
     visibility: hidden;
 }
+
 #message-text {
+    visibility: hidden;
+}
+
+#end-game-container {
+    visibility: hidden;
+}
+
+#high-scores-container {
     visibility: hidden;
 }
