@@ -1,3 +1,6 @@
 #question-card {
     visibility: hidden;
 }
+#message-text {
+    visibility: hidden;
+}

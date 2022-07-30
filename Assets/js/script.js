@@ -13,12 +13,17 @@ var startButtonEl = document.getElementById('start-button');
 var timerEl = document.getElementById('countdown-timer');
 // Element selector for question card
 var questionCardEl = document.getElementById('question-card');
+// Elements for choice buttons
+var button1El = document.getElementById('button-1');
+var button2El = document.getElementById('button-2');
+var button3El = document.getElementById('button-3');
+var button4El = document.getElementById('button-4');
 // Default game length
 var defaultGameLength = 60;
 // Default wrong answer penalty
 var defaultPenalty = 10;
 // Default # of answer choices
-var defaultChoices = 4 ;
+var defaultChoices = 4;
 // Number variable for the timer value
 var gameTime = defaultGameLength;
 // Boolean to show if time is up
@@ -55,6 +60,8 @@ var quizQuestion5 = {
 var questionsArray = [];
 // Count of questions answered
 var questionsAnswered = 0;
+// Interval used to hide a message after 2 seconds
+var messageInterval ;
 
 // Function declarations
 
@@ -79,14 +86,13 @@ function startGame() {
     startTimer();
     // Call displayQuestion()
     displayQuestion();
-
 }
 
 // Starts a timer
 function startTimer() {
     var gameTimeInterval = setInterval(function () {
 
-        // Check to see if time is up. If time is up (gameTime <== 0) then clear the interval and set timeUp to true. Otherwise, decrement gameTime
+        // Check to see if time is up. If time is up (gameTime <= 0) then clear the interval and set timeUp to true. Otherwise, decrement gameTime
 
         if (gameTime <= 0) {
             clearInterval(gameTimeInterval);
@@ -104,26 +110,39 @@ function startTimer() {
 // Choose a question randomly from questionsArray. Displays a question with a set of 4 answers. Each answer is a button with an event listener that calls checkAnswer(). Data attribute for correct answer is set to true. All others false. Removes chosen question from questionsArray.
 function displayQuestion() {
     var randomQuestionIndex = Math.floor(Math.random() * questionsArray.length);
-    var chosenQuestion = questionsArray[randomQuestionIndex].question ;
-    var chosenChoices = questionsArray[randomQuestionIndex].choices ;
-    questionCardEl.children[0].textContent = chosenQuestion ;
-    for (var i = 1; i <= defaultChoices ; i++) {
-        var randomChoiceIndex = Math.floor(Math.random() * chosenChoices.length) ;
-        var randomChoice = chosenChoices.splice(randomChoiceIndex,1).join();
-        questionCardEl.children[i].textContent = randomChoice ;
+    var chosenQuestion = questionsArray[randomQuestionIndex].question;
+    var chosenChoices = questionsArray[randomQuestionIndex].choices;
+    questionCardEl.children[0].textContent = chosenQuestion;
+    for (var i = 1; i <= defaultChoices; i++) {
+        var randomChoiceIndex = Math.floor(Math.random() * chosenChoices.length);
+        var randomChoice = chosenChoices.splice(randomChoiceIndex, 1).join();
+        questionCardEl.children[i].textContent = randomChoice;
         if (randomChoice === questionsArray[randomQuestionIndex].correctAnswer) {
             questionCardEl.children[i].dataset.correct = "true"
         } else {
             questionCardEl.children[i].dataset.correct = "false"
         }
     }
-    questionCardEl.setAttribute("style", "visibility:visible") ;
-    questionsArray.splice(randomQuestionIndex,1) ;
+    questionCardEl.setAttribute("style", "visibility:visible");
+    questionsArray.splice(randomQuestionIndex, 1);
 }
 
-// Checks to see if the answer chosen is correct by checking the state of data-attribute correct-answer. If wrong, deducts time and says Wrong! Otherwise, says Correct!. Either way, moves to next question as long as there are questions and time remaining.
-function checkAnswer() {
-
+// Checks to see if the answer chosen is correct by checking the state of data-attribute correct. If wrong, deducts time and says Wrong! Otherwise, says Correct!. Either way, moves to next question as long as there are questions and time remaining.
+function checkAnswer(event) {
+    clearInterval(messageInterval) ;
+    var messageTextEl = document.getElementById("message-text");
+    if (event.target.dataset.correct === "true") {
+        messageTextEl.textContent = "Correct!";
+    }
+    else {
+        messageTextEl.textContent = "Wrong!";
+    }
+    messageTextEl.setAttribute("style", "visibility:visible");
+    // Function to make message disappear after 2 seconds
+        messageInterval = setInterval(function () {
+        messageTextEl.setAttribute("style", "visibility:hidden");
+        clearInterval(messageInterval) ;
+    }, 2000);
 }
 
 // Called when the game ends due to time up or all questions answered. Displays a message about the game being over, displays score, and displays a form for initials for high sccore. Form only submits when it isn't blank. Form submission calls addHighScore().
@@ -139,7 +158,7 @@ function showHighScores() {
 
 // Shows the start screen that describes the quiz and has a button to start the quiz
 function showStartScreen() {
-    startButtonEl.addEventListener("click", startGame);
+
 }
 
 // Adds the latest scoreObject to the highScores array. Sorts array by scoreObject.score in descending order. Adds array to localstorage "high-scores"
@@ -154,8 +173,14 @@ function init() {
         highScores = storedHighScores;
     }
     showStartScreen();
+    timerEl.textContent = "Time " + gameTime;
 
     // add event listeners to buttons
+    startButtonEl.addEventListener("click", startGame);
+    button1El.addEventListener("click", checkAnswer);
+    button2El.addEventListener("click", checkAnswer);
+    button3El.addEventListener("click", checkAnswer);
+    button4El.addEventListener("click", checkAnswer);
 }
 
 init();
