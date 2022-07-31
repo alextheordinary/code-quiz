@@ -11,14 +11,17 @@
 
 <body>
     <header>
-        <h1>Rename or get rid of this later</h1>
+        <div id="nav-bar-container">
+            <button id="view-high-scores">View High Scores</button>
+            <div id="countdown-timer"></div>
+        </div>
     </header>
     <main>
-        <div id="countdown-timer"></div>
-        <!-- figure out how to link a function. probably via event listener -->
-        <a href="">View High Scores</a>
+        <div id="game-area-container">
         <div id="start-screen-container">
-            <h4>Try to answer all 5 questions as quickly and correctly as possible within 60 seconds. 10 seconds deducted for each wrong answer. </h4>
+            <h2>Coding Quiz</h2>
+            <h4>Try to answer all 5 questions as quickly and correctly as possible within 60 seconds. 10 seconds
+                deducted for each wrong answer. </h4>
             <button type="button" id="start-button">Start</button>
         </div>
         <div id="question-container">
@@ -29,11 +32,12 @@
             <button id="button-4" data-correct="false">B4</button>
         </div>
         <div id="end-game-container">
+            <div id="end-game-message"></div>
             <form id="high-score-form">
-                <div id="end-game-message"></div>
                 <label for="initials">Initials</label>
-                <input type="text" id="initials" name="initials" placeholder="Please enter your initials">
-                <button type="button" id="submit-high-score">Submit High Score</button>
+                <input type="text" id="initials" name="initials" placeholder="Please enter your initials" maxlength="3"
+                    minlength="2">
+                <button type="click" id="submit-high-score">Submit High Score</button>
             </form>
         </div>
         <div id="high-scores-container">
@@ -42,7 +46,8 @@
             <button type="button" id="go-back">Go back</button>
             <button type="button" id="reset-high-scores">Reset High Scores</button>
         </div>
-        <div id="message-text"></div>
+    </div>
+    <div id="message-text"></div>
     </main>
     <script src="./assets/js/script.js"></script>
 </body>

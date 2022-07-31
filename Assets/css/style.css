@@ -1,15 +1,70 @@
 #question-container {
-    visibility: hidden;
+    display: inline-block;
 }
 
 #message-text {
-    visibility: hidden;
+    display: inline-block;
 }
 
 #end-game-container {
-    visibility: hidden;
+    display: inline-block;
 }
 
 #high-scores-container {
-    visibility: hidden;
+    display: inline-block;
+}
+
+#start-screen-container {
+    display: inline-block;
+}
+
+#message-text {
+    display: block;
+    margin: 25%;
+}
+
+#nav-bar-container {
+
+    margin: 50px;
+
+}
+
+#countdown-timer {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    margin: 5px;
+
+
+}
+
+#view-high-scores {
+    position: fixed;
+    left: 10px;
+    top: 10px;
+    margin: 5px;
+
+}
+
+#game-area-container {
+    display: flex;
+    border: 1px solid red;
+    width: 50%;
+    justify-content: center;
+    margin: 25% 25% 5% 25% ;
+    padding: 25px ;
+
+}
+
+header {
+    height: 50px;
+}
+
+#end-game-message {
+    padding: 10px;
+    align-content: center;
+}
+
+#high-score-form {
+    padding: 10px;
 }

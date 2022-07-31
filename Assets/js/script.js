@@ -11,20 +11,23 @@ var scoreObject = {
 var startButtonEl = document.getElementById('start-button');
 // Element selector for the displayed timer
 var timerEl = document.getElementById('countdown-timer');
+// Selector for View High Scores Link
+var highScoresLinkEl = document.getElementById('view-high-scores');
 // Container element selectors
 var questionContainerEl = document.getElementById('question-container');
 var endGameContainerEl = document.getElementById("end-game-container");
 var highScoresContainerEl = document.getElementById("high-scores-container");
 var startScreenContainerEl = document.getElementById("start-screen-container");
 var highScoresListEl = document.getElementById("high-scores-list");
-// Elements for choice buttons
+var navBarContainerEl = document.getElementById("nav-bar-container");
+var messageTextEl = document.getElementById("message-text");
+// Element selectors for buttons
 var button1El = document.getElementById('button-1');
 var button2El = document.getElementById('button-2');
 var button3El = document.getElementById('button-3');
 var button4El = document.getElementById('button-4');
-// Element for submit button
+var goBackButtonEl = document.getElementById('go-back');
 var submitHSButtonEl = document.getElementById("submit-high-score");
-// Element for reset button
 var resetHSButtonEl = document.getElementById("reset-high-scores");
 // Default game length
 var defaultGameLength = 60;
@@ -39,42 +42,46 @@ var timeUp = false;
 // Boolean to show if game is in progress
 var gameInProgress = false;
 // Objects for questions and answers
-var quizQuestion1 = {
-    question: "Q1",
-    correctAnswer: "C1",
-    choices: ["C1", "C2", "C3", "C4"]
-}
-var quizQuestion2 = {
-    question: "Q2",
-    correctAnswer: "C1",
-    choices: ["C1", "C2", "C3", "C4"]
-}
-var quizQuestion3 = {
-    question: "Q3",
-    correctAnswer: "C1",
-    choices: ["C1", "C2", "C3", "C4"]
-}
-var quizQuestion4 = {
-    question: "Q4",
-    correctAnswer: "C1",
-    choices: ["C1", "C2", "C3", "C4"]
-}
-var quizQuestion5 = {
-    question: "Q5",
-    correctAnswer: "C1",
-    choices: ["C1", "C2", "C3", "C4"]
-}
+var quizQuestion1;
+var quizQuestion2;
+var quizQuestion3;
+var quizQuestion4;
+var quizQuestion5;
 // Array to story quizQuestion objects
 var questionsArray = [];
-// Count of questions answered
-var questionsAnswered = 0;
 // Interval used to hide a message after 2 seconds
 var messageInterval;
+var gameTimeInterval;
 
 // Function declarations
 
 // Add questions to questionsArray[]
 function addQuestions() {
+    quizQuestion1 = {
+        question: "Q1",
+        correctAnswer: "C1",
+        choices: ["C1", "C2", "C3", "C4"]
+    }
+    quizQuestion2 = {
+        question: "Q2",
+        correctAnswer: "C1",
+        choices: ["C1", "C2", "C3", "C4"]
+    }
+    quizQuestion3 = {
+        question: "Q3",
+        correctAnswer: "C1",
+        choices: ["C1", "C2", "C3", "C4"]
+    }
+    quizQuestion4 = {
+        question: "Q4",
+        correctAnswer: "C1",
+        choices: ["C1", "C2", "C3", "C4"]
+    }
+    quizQuestion5 = {
+        question: "Q5",
+        correctAnswer: "C1",
+        choices: ["C1", "C2", "C3", "C4"]
+    }
     questionsArray = [];
     questionsArray.push(quizQuestion1);
     questionsArray.push(quizQuestion2);
@@ -84,21 +91,20 @@ function addQuestions() {
 }
 
 
-// Starts the game - Sets gameTimer to defaultGameLength, setsQuestionsAnswered to zero, calls addQuestions, calls startTimer, sets gameInProgress to true and calls displayQuestion to show the first question
+// Starts the game - Sets gameTimer to defaultGameLength, calls addQuestions, calls startTimer, sets gameInProgress to true and calls displayQuestion to show the first question
 function startGame() {
-    gameTime = defaultGameLength;
-    questionsAnswered = 0;
     gameInProgress = true;
     addQuestions();
     // Call startTimer()
     startTimer();
     // Call displayQuestion()
     displayQuestion();
+    startScreenContainerEl.setAttribute("style", "display:none");
 }
 
 // Starts a timer
 function startTimer() {
-    var gameTimeInterval = setInterval(function () {
+    gameTimeInterval = setInterval(function () {
 
         // Check to see if time is up. If time is up (gameTime <= 0) then clear the interval and set timeUp to true. Otherwise, decrement gameTime
 
@@ -132,14 +138,14 @@ function displayQuestion() {
             questionContainerEl.children[i].dataset.correct = "false"
         }
     }
-    questionContainerEl.setAttribute("style", "visibility:visible");
+    questionContainerEl.setAttribute("style", "display:initial");
     questionsArray.splice(randomQuestionIndex, 1);
 }
 
 // Checks to see if the answer chosen is correct by checking the state of data-attribute correct. If wrong, deducts time and says Wrong! Otherwise, says Correct!. Either way, moves to next question as long as there are questions and time remaining.
 function checkAnswer(event) {
     clearInterval(messageInterval);
-    var messageTextEl = document.getElementById("message-text");
+    messageTextEl = document.getElementById("message-text");
     if (event.target.dataset.correct === "true") {
         messageTextEl.textContent = "Correct!";
     }
@@ -150,15 +156,17 @@ function checkAnswer(event) {
             gameTime = 0;
         }
     }
-    messageTextEl.setAttribute("style", "visibility:visible");
+    messageTextEl.setAttribute("style", "display:initial");
     // Function to make message disappear after 2 seconds
     messageInterval = setInterval(function () {
-        messageTextEl.setAttribute("style", "visibility:hidden");
+        messageTextEl.setAttribute("style", "display:none");
         clearInterval(messageInterval);
     }, 2000);
     if (questionsArray.length === 0) {
         gameInProgress = false;
+        timerEl.textContent = "Time " + gameTime;
         endGame();
+        questionContainerEl.setAttribute("style", "display:none");
     } else if ((gameTime > 0) && (gameInProgress === true)) {
         displayQuestion();
     }
@@ -167,51 +175,90 @@ function checkAnswer(event) {
 // Called when the game ends due to time up or all questions answered. Displays a message about the game being over, displays score, and displays a form for initials for high sccore. Form only submits when it isn't blank. Form submission calls addHighScore().
 
 function endGame() {
+    startScreenContainerEl.setAttribute("style", "display:none");
+    questionContainerEl.setAttribute("style", "display:none");
+    highScoresContainerEl.setAttribute("style", "display:none");
+    endGameContainerEl.setAttribute("style", "display:none");
     var endGameMessageEl = document.getElementById("end-game-message");
     var highScoreFormEl = document.getElementById("high-scoreform");
     endGameMessageEl.textContent = "The game is over. You got a score of " + gameTime;
-    endGameContainerEl.setAttribute("style", "visibility:visible");
+    endGameContainerEl.setAttribute("style", "display:initial");
 }
 
 // Shows ordered list of high scores along with buttons to clear the list and go back to start screen. 
 function showHighScores() {
+    clearInterval(gameTimeInterval);
+    startScreenContainerEl.setAttribute("style", "display:none");
+    questionContainerEl.setAttribute("style", "display:none");
+    endGameContainerEl.setAttribute("style", "display:none");
+    navBarContainerEl.setAttribute("style", "display:none");
+    messageTextEl.setAttribute("style", "display:none");
+    highScoresListEl.innerHTML = '';
+    highScoresListEl.innerHTML = "<h4>High Scores </h4>" 
     for (var i = 0; i < highScores.length; i++) {
         var highScoreEl = document.createElement("li");
         highScoreEl.textContent = highScores[i].initials + " - " + highScores[i].score;
         highScoresListEl.appendChild(highScoreEl);
     }
-    console.log(highScoresListEl);
-    highScoresContainerEl.setAttribute("style", "visibility:visible");
+    highScoresContainerEl.setAttribute("style", "display:initial");
 }
 
 // Shows the start screen that describes the quiz and has a button to start the quiz
 function showStartScreen() {
-
+    highScoresContainerEl.setAttribute("style", "display:none");
+    startScreenContainerEl.setAttribute("style", "display:initial");
 }
 
 // Adds the latest scoreObject to the highScores array. Sorts array by scoreObject.score in descending order. Adds array to localstorage "high-scores"
 function addHighScore(event) {
     event.preventDefault();
-    scoreObject.initials = document.getElementById("initials").value;
-    scoreObject.score = gameTime;
-    highScores.push(scoreObject);
-    // Sort function to be added
-    highScores.sort(function (a, b) {
-        return b.score - a.score;
-    });
-    // Store sorted high score
-    localStorage.setItem("high-scores", JSON.stringify(highScores));
+    messageTextEl = document.getElementById("message-text");
+    scoreObject.initials = document.getElementById("initials").value.trim();
+    if (scoreObject.initials.length < 2) {
+        messageTextEl.textContent = "Intials must be between 2 and 3 characters in length" ;
+        messageTextEl.setAttribute("style", "display:initial");
+        return;
+    } else {
+        scoreObject.score = gameTime;
+        highScores.push(scoreObject);
+        // Sort function to be added
+        highScores.sort(function (a, b) {
+            return b.score - a.score;
+        });
+        // Store sorted high score
+        localStorage.setItem("high-scores", JSON.stringify(highScores));
+        endGameContainerEl.setAttribute("style", "display:none");
+        document.getElementById('initials').value = '';
+        messageTextEl.textContent = "";
+        messageTextEl.setAttribute("style", "display:none");
+        showHighScores();
+    }
+}
+
+// Resets the high score list and resets the local storage for it
+
+function resetHighScores(event) {
+    event.preventDefault();
+    highScores = [];
+    localStorage.removeItem("high-scores");
     showHighScores();
 }
 
 // Initialize local storage variables and call showStartScreen()
 function init() {
+    startScreenContainerEl.setAttribute("style", "display:none");
+    questionContainerEl.setAttribute("style", "display:none");
+    highScoresContainerEl.setAttribute("style", "display:none");
+    endGameContainerEl.setAttribute("style", "display:none");
+    navBarContainerEl.setAttribute("style", "display:initial");
     var storedHighScores = JSON.parse(localStorage.getItem("high-scores"));
     if (storedHighScores !== null) {
         highScores = storedHighScores;
     }
-    showStartScreen();
+    gameTime = defaultGameLength;
     timerEl.textContent = "Time " + gameTime;
+    showStartScreen();
+
 
     // add event listeners to buttons
     startButtonEl.addEventListener("click", startGame);
@@ -220,6 +267,10 @@ function init() {
     button3El.addEventListener("click", checkAnswer);
     button4El.addEventListener("click", checkAnswer);
     submitHSButtonEl.addEventListener("click", addHighScore);
+    goBackButtonEl.addEventListener("click", init);
+    resetHSButtonEl.addEventListener("click", resetHighScores);
+    highScoresLinkEl.addEventListener("click", showHighScores);
+    showStartScreen();
 }
 
 init();
