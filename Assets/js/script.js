@@ -6,7 +6,7 @@ var highScores = [];
 var scoreObject = {
     initials: "",
     score: 0
-}
+};
 // Element selector for the start button
 var startButtonEl = document.getElementById('start-button');
 // Element selector for the displayed timer
@@ -61,27 +61,27 @@ function addQuestions() {
         question: "JSON is an acronym that stands for _________",
         correctAnswer: "JavaScript Object Notation",
         choices: ["Jason String Orb Net", "JavaScript Object Notation", "JavaScript Order Notification", "JavaScript Ordinal Network"]
-    }
+    };
     quizQuestion2 = {
-        question: "Q2",
-        correctAnswer: "C1",
-        choices: ["C1", "C2", "C3", "C4"]
-    }
+        question: "Which one of these functions can be used to convert an array into a string?",
+        correctAnswer: "join()",
+        choices: ["push()", "join()", "splice()", "pop()"]
+    };
     quizQuestion3 = {
-        question: "Q3",
-        correctAnswer: "C1",
-        choices: ["C1", "C2", "C3", "C4"]
-    }
+        question: "For the following code setInterval(function(){}, x), what value must x be for the function to execute every 3 seconds?",
+        correctAnswer: "3000",
+        choices: ["3", "300", "3000", "1000"]
+    };
     quizQuestion4 = {
-        question: "Q4",
-        correctAnswer: "C1",
-        choices: ["C1", "C2", "C3", "C4"]
-    }
+        question: "Which one of these numbers could be returned by Math.random() ?",
+        correctAnswer: ".2937",
+        choices: ["1", "5", "5.235", ".2937"]
+    };
     quizQuestion5 = {
-        question: "Q5",
-        correctAnswer: "C1",
-        choices: ["C1", "C2", "C3", "C4"]
-    }
+        question: "Which one of the following statements will return true?",
+        correctAnswer: "Math.floor(5.7425) === 5",
+        choices: ["\"5\" === 5", "Math.floor(5.7425) === 5", "6 < 5", "Math.floor(5.7425) > 5"]
+    };
     questionsArray = [];
     questionsArray.push(quizQuestion1);
     questionsArray.push(quizQuestion2);
@@ -195,7 +195,7 @@ function showHighScores() {
     navBarContainerEl.setAttribute("style", "display:none");
     messageTextEl.setAttribute("style", "display:none");
     highScoresListEl.innerHTML = '';
-    highScoresListEl.innerHTML = "<h4>High Scores</h4>" 
+    highScoresListEl.innerHTML = "<h4>High Scores</h4>"
     for (var i = 0; i < highScores.length; i++) {
         var highScoreEl = document.createElement("li");
         highScoreEl.textContent = highScores[i].initials + " - " + highScores[i].score;
@@ -216,7 +216,7 @@ function addHighScore(event) {
     messageTextEl = document.getElementById("message-text");
     scoreObject.initials = document.getElementById("initials").value.trim();
     if (scoreObject.initials.length < 2) {
-        messageTextEl.textContent = "Intials must be between 2 and 3 characters in length" ;
+        messageTextEl.textContent = "Intials must be between 2 and 3 characters in length";
         messageTextEl.setAttribute("style", "display:initial");
         return;
     } else {

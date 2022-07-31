@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaScript Code Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 
@@ -18,36 +19,36 @@
     </header>
     <main>
         <div id="game-area-container">
-        <div id="start-screen-container">
-            <h2>Coding Quiz</h2>
-            <h4>Try to answer all 5 questions as quickly and correctly as possible within 60 seconds. 10 seconds
-                deducted for each wrong answer. </h4>
-            <button type="button" id="start-button">Start</button>
+            <div id="start-screen-container">
+                <h2>Coding Quiz</h2>
+                <h4>Try to answer all 5 questions as quickly and correctly as possible within 60 seconds. 10 seconds
+                    will be deducted for each wrong answer.</h4>
+                <button type="button" id="start-button">Start</button>
+            </div>
+            <div id="question-container">
+                <div id="question">Question</div>
+                <button id="button-1" data-correct="false">B1</button>
+                <button id="button-2" data-correct="false">B2</button>
+                <button id="button-3" data-correct="false">B3</button>
+                <button id="button-4" data-correct="false">B4</button>
+            </div>
+            <div id="end-game-container">
+                <div id="end-game-message"></div>
+                <form id="high-score-form">
+                    <label for="initials">Initials</label>
+                    <input type="text" id="initials" name="initials" placeholder="Please enter your initials"
+                        maxlength="3" minlength="2">
+                    <button type="click" id="submit-high-score">Submit High Score</button>
+                </form>
+            </div>
+            <div id="high-scores-container">
+                <ol id="high-scores-list">
+                </ol>
+                <button type="button" id="go-back">Go back</button>
+                <button type="button" id="reset-high-scores">Reset High Scores</button>
+            </div>
         </div>
-        <div id="question-container">
-            <div id="question">Question</div>
-            <button id="button-1" data-correct="false">B1</button>
-            <button id="button-2" data-correct="false">B2</button>
-            <button id="button-3" data-correct="false">B3</button>
-            <button id="button-4" data-correct="false">B4</button>
-        </div>
-        <div id="end-game-container">
-            <div id="end-game-message"></div>
-            <form id="high-score-form">
-                <label for="initials">Initials</label>
-                <input type="text" id="initials" name="initials" placeholder="Please enter your initials" maxlength="3"
-                    minlength="2">
-                <button type="click" id="submit-high-score">Submit High Score</button>
-            </form>
-        </div>
-        <div id="high-scores-container">
-            <ol id="high-scores-list">
-            </ol>
-            <button type="button" id="go-back">Go back</button>
-            <button type="button" id="reset-high-scores">Reset High Scores</button>
-        </div>
-    </div>
-    <div id="message-text"></div>
+        <div id="message-text"></div>
     </main>
     <script src="./assets/js/script.js"></script>
 </body>

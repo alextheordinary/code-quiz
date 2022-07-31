@@ -1,17 +1,33 @@
+html {
+    font-family: 'Lato', sans-serif;
+    font-size: 10px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
 #question-container {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    width: 75%;
+    text-align: center;
 }
 
 #question {
     position: relative;
     padding: 5px;
+    font-size: 1.6rem;
+    font-weight: bolder;
 }
 
 #question-container button {
     position: relative;
-    width: 95%;
+    width: 50%;
     margin: 10px;
     padding: 5px;
 }
@@ -21,7 +37,11 @@
 }
 
 #end-game-container {
-    display: inline-block;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.6rem;
 }
 
 #high-scores-container {
@@ -30,17 +50,18 @@
 
 #start-screen-container {
     display: inline-block;
+    font-size: 1.6rem;
 }
 
 #message-text {
     display: block;
-    margin: 25%;
+    padding: 10px;
+    font-size: 1.6rem;
+    font-weight: bolder;
 }
 
 #nav-bar-container {
-
     margin: 50px;
-
 }
 
 #countdown-timer {
@@ -48,8 +69,6 @@
     right: 10px;
     top: 10px;
     margin: 5px;
-
-
 }
 
 #view-high-scores {
@@ -57,23 +76,24 @@
     left: 10px;
     top: 10px;
     margin: 5px;
-
 }
 
 #game-area-container {
     display: flex;
-    border: 1px solid red;
+    position: relative;
     width: 50%;
     justify-content: center;
-    margin: 10% 25% 5% 25%;
     padding: 25px;
     background-color: cornflowerblue;
     min-height: 400px;
+    min-width: 400px;
 
 }
 
 header {
     height: 50px;
+    font-size: 1.6rem;
+    font-weight: bolder;
 }
 
 #end-game-message {
@@ -85,9 +105,16 @@ header {
     padding: 10px;
 }
 
+#high-scores-list {
+    font-size: 1.8rem;
+}
+
 #high-scores-list li {
     text-transform: uppercase;
+    padding: 2px;
+    font-size: 1.6rem;
 }
+
 
 button {
     background-color: lightslategray;
