@@ -58,9 +58,9 @@ var gameTimeInterval;
 // Add questions to questionsArray[]
 function addQuestions() {
     quizQuestion1 = {
-        question: "Q1",
-        correctAnswer: "C1",
-        choices: ["C1", "C2", "C3", "C4"]
+        question: "JSON is an acronym that stands for _________",
+        correctAnswer: "JavaScript Object Notation",
+        choices: ["Jason String Orb Net", "JavaScript Object Notation", "JavaScript Order Notification", "JavaScript Ordinal Network"]
     }
     quizQuestion2 = {
         question: "Q2",
@@ -122,7 +122,7 @@ function startTimer() {
     }, 1000);
 }
 
-// Choose a question randomly from questionsArray. Displays a question with a set of 4 answers. Each answer is a button with an event listener that calls checkAnswer(). Data attribute for correct answer is set to true. All others false. Removes chosen question from questionsArray.
+// Choose a question randomly from questionsArray. Displays a question with a set of 4 answers that are randomly ordered. Each answer is a button with an event listener that calls checkAnswer(). Data attribute for correct answer is set to true. All others false. Removes chosen question from questionsArray.
 function displayQuestion() {
     var randomQuestionIndex = Math.floor(Math.random() * questionsArray.length);
     var chosenQuestion = questionsArray[randomQuestionIndex].question;
@@ -142,7 +142,7 @@ function displayQuestion() {
     questionsArray.splice(randomQuestionIndex, 1);
 }
 
-// Checks to see if the answer chosen is correct by checking the state of data-attribute correct. If wrong, deducts time and says Wrong! Otherwise, says Correct!. Either way, moves to next question as long as there are questions and time remaining.
+// Checks to see if the answer chosen is correct by checking the state of data-attribute data-correct. If wrong, deducts time and says Wrong! Otherwise, says Correct!. Either way, moves to next question as long as there are questions and time remaining.
 function checkAnswer(event) {
     clearInterval(messageInterval);
     messageTextEl = document.getElementById("message-text");
@@ -172,9 +172,10 @@ function checkAnswer(event) {
     }
 }
 
-// Called when the game ends due to time up or all questions answered. Displays a message about the game being over, displays score, and displays a form for initials for high sccore. Form only submits when it isn't blank. Form submission calls addHighScore().
+// Called when the game ends due to time up or all questions answered. Displays a message about the game being over, displays score, and displays a form for initials for high sccore. Form only submits when it isn't blank and requires 2-3 characters. Form submission calls addHighScore().
 
 function endGame() {
+    clearInterval(gameTimeInterval);
     startScreenContainerEl.setAttribute("style", "display:none");
     questionContainerEl.setAttribute("style", "display:none");
     highScoresContainerEl.setAttribute("style", "display:none");
@@ -194,7 +195,7 @@ function showHighScores() {
     navBarContainerEl.setAttribute("style", "display:none");
     messageTextEl.setAttribute("style", "display:none");
     highScoresListEl.innerHTML = '';
-    highScoresListEl.innerHTML = "<h4>High Scores </h4>" 
+    highScoresListEl.innerHTML = "<h4>High Scores</h4>" 
     for (var i = 0; i < highScores.length; i++) {
         var highScoreEl = document.createElement("li");
         highScoreEl.textContent = highScores[i].initials + " - " + highScores[i].score;
@@ -244,7 +245,7 @@ function resetHighScores(event) {
     showHighScores();
 }
 
-// Initialize local storage variables and call showStartScreen()
+// Initialize local storage variables and call showStartScreen(). Display:nones to hide any containers that aren't needed at start.
 function init() {
     startScreenContainerEl.setAttribute("style", "display:none");
     questionContainerEl.setAttribute("style", "display:none");

@@ -1,5 +1,19 @@
 #question-container {
-    display: inline-block;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+#question {
+    position: relative;
+    padding: 5px;
+}
+
+#question-container button {
+    position: relative;
+    width: 95%;
+    margin: 10px;
+    padding: 5px;
 }
 
 #message-text {
@@ -51,8 +65,10 @@
     border: 1px solid red;
     width: 50%;
     justify-content: center;
-    margin: 25% 25% 5% 25% ;
-    padding: 25px ;
+    margin: 10% 25% 5% 25%;
+    padding: 25px;
+    background-color: cornflowerblue;
+    min-height: 400px;
 
 }
 
@@ -67,4 +83,16 @@ header {
 
 #high-score-form {
     padding: 10px;
+}
+
+#high-scores-list li {
+    text-transform: uppercase;
+}
+
+button {
+    background-color: lightslategray;
+    color: white;
+    border: 2px solid black;
+    padding: 5px;
+    margin: 4px;
 }
